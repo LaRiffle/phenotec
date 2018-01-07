@@ -14,7 +14,7 @@ body
 	width: 976px;
 	margin: auto;
 	font-size: 2.8em;
-   padding: 20px;
+  padding: 20px;
 }
 #divFirstTable
 {
@@ -301,10 +301,14 @@ article a {color: #8888EE;}
 	border: 1px #777777 solid;
 	border-radius: 4px;
 	margin: 4px;
-	height: 110px;
+	height: 120px;
 	overflow: hidden;
 }
-.icone2, .icone2NOFLOAT, .icone2_hidden, .icone3, .icone3NOFLOAT {width: 110px;	padding: 4px; font-size: 1.1em;}
+.icone2, .icone2NOFLOAT, .icone2_hidden, .icone3, .icone3NOFLOAT {
+  width: 120px;
+  padding: 4px;
+  font-size: 1.1em;
+}
 .icone {display: inline-block; width: 110px;}
 .icone2, .icone2_hidden, .icone3  {float: left;}
 .icone3, .icone3NOFLOAT {height: 33px; margin: 4px;}
@@ -323,7 +327,12 @@ article a {color: #8888EE;}
 {
 	cursor:pointer;
 	border: 3px #777777 solid;
-	margin: 3px;
+	margin: 4px;
+  padding: 2px;
+}
+.icone2 a {
+  color: #333333;
+  text-decoration: none;
 }
 .icone2NOFLOAT:hover
 {
@@ -524,4 +533,17 @@ fieldset
 	margin-top: -16px;
 	margin-left: 16px;
 	margin-bottom: 41px;
+}
+#footer {
+  background-image: url("skin_1024/footer.png");
+	background-repeat: repeat-x;
+  height: 33px;
+  width: 100%;
+}
+#footer p {
+  width: 100%;
+  text-align: center;
+  color: #AAAAAA;
+  font-size: 0.95em;
+  margin-top: 8px;
 }
