@@ -19,6 +19,7 @@ class Article
     public function __construct()
     {
         $this->publications = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->rightAlign = false;
     }
     /**
      * @var int
@@ -35,6 +36,13 @@ class Article
      * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="domain", type="string", length=255)
+     */
+    private $domain;
 
     /**
      * @var string
@@ -62,6 +70,13 @@ class Article
      * @ORM\ManyToMany(targetEntity="PNT\SiteBundle\Entity\Publication", cascade={"persist"})
      */
     private $publications;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="right_align", type="boolean")
+     */
+    private $rightAlign;
 
 
     /**
@@ -96,6 +111,30 @@ class Article
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Set domain
+     *
+     * @param string $domain
+     *
+     * @return Article
+     */
+    public function setDomain($domain)
+    {
+        $this->domain = $domain;
+
+        return $this;
+    }
+
+    /**
+     * Get domain
+     *
+     * @return string
+     */
+    public function getDomain()
+    {
+        return $this->domain;
     }
 
     /**
@@ -202,5 +241,29 @@ class Article
     public function getPublications()
     {
         return $this->publications;
+    }
+
+    /**
+     * Set rightAlign
+     *
+     * @param boolean $rightAlign
+     *
+     * @return Article
+     */
+    public function setRightAlign($rightAlign)
+    {
+        $this->rightAlign = $rightAlign;
+
+        return $this;
+    }
+
+    /**
+     * Get rightAlign
+     *
+     * @return bool
+     */
+    public function getRightAlign()
+    {
+        return $this->rightAlign;
     }
 }

@@ -1,6 +1,21 @@
-pnt_site_homepage:
-    path:     /home
+pnt_site_home:
+    path:     /
     defaults: { _controller: PNTSiteBundle:Home:home }
+pnt_site_about_us:
+    path:     /about-us
+    defaults: { _controller: PNTSiteBundle:Home:aboutUs }
+pnt_site_services:
+    path:     /services
+    defaults: { _controller: PNTSiteBundle:Home:services }
+pnt_site_news:
+    path:     /news
+    defaults: { _controller: PNTSiteBundle:Home:news }
+pnt_site_partners:
+    path:     /partners
+    defaults: { _controller: PNTSiteBundle:Home:partners }
+pnt_site_contact:
+    path:     /contact
+    defaults: { _controller: PNTSiteBundle:Home:contact }
 
 pnt_site_article:
   path:     /admin/article

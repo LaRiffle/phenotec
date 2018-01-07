@@ -2,7 +2,7 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-    <title>Phenotec {% block title %}{% endblock %}</title>
+    <title>PhenoTec {% block title %}{% endblock %}</title>
     <meta name="description" content="PhenoTec AG is a pharmaceutical research, service and consulting company." />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,9 +13,32 @@
     {% block head %}{% endblock %}
   </head>
   <body>
+    <div id="head">
+  	   <div style="height: 4px; background-color: white;"></div>
+  	    <div id="divFirstTable">
+  		      <table class="topTable"><tr>
+  		          <td id="title"><a href="{{ path('pnt_site_home') }}">Phenotec <span style="font-size: 28px; margin-left: 73px; position: relative; bottom: 4px;">Research Service & Consulting</span></a></td>
+  		      </tr></table>
+  	    </div>
+  		  <div id="head_menu" style="margin-top: 0px; height: 183px;">
+  		  </div>
+  		  <div class="imageHead" id="imageHead"></div><div class="imageHeadCover" id="imageHeadCover"></div><img class="screenShock" id="screenShock" src="{{ asset('bundles/PNT/skin_1024/screenShock.jpg') }}">
+  	</div>
+    <div id="bodytitle2">
+  		<table class="topTable"><tr>
+    		<td id="main_message" style="text-transform: capitalize;">{% block nav_title %}Welcome{% endblock %}</td>
+    		<td class="menu_title2" id="about us"><a href="{{ path('pnt_site_about_us') }}">About us</a></td>
+    		<td class="menu_title2" id="services"><a href="{{ path('pnt_site_services') }}">Services</a></td>
+    		<td class="menu_title2" id="news"><a href="{{ path('pnt_site_news') }}">News</a></td>
+    		<td class="menu_title2" id="partners"><a href="{{ path('pnt_site_partners') }}">Partners</a></td>
+    		<td class="menu_title2" id="contact"><a href="{{ path('pnt_site_contact') }}">Contact</a></td>
+  		</tr></table>
+		</div>
+    <section id="body">
     {% block body %}
 
     {% endblock %}
+    </section>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
@@ -37,7 +60,7 @@
         }
         var hidden_element_id = $(this).attr('data-target');
         console.log(hidden_element_id);
-        $(hidden_element_id).show();
+        $('#'+hidden_element_id).show();
         if(!$(this).hasClass('keep')){
           $(this).hide();
         }

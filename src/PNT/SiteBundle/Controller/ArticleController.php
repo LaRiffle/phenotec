@@ -15,6 +15,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class ArticleController extends Controller
@@ -63,9 +65,22 @@ class ArticleController extends Controller
         }
         $form = $this->get('form.factory')->createBuilder(FormType::class, $article)
         ->add('title', TextType::class)
+        ->add('domain', ChoiceType::class, array(
+            'choices'  => array(
+                'Home' => 'home',
+                'About us' => 'about-us',
+                'Services' => 'services',
+                'News' => 'news',
+                'Partners' => 'partners',
+                'Contact' => 'contact'
+            ),
+        ))
         ->add('text', TextareaType::class)
         ->add('more_text', TextareaType::class, array('required' => False))
         ->add('image', FileType::class, array('label' => 'Image', 'required' => False))
+        ->add('right_align', CheckboxType::class, array(
+          'required' => false
+        ))
         ->add('publications', EntityType::class, array(
                 'class'        => 'PNTSiteBundle:Publication',
                 'choice_label' => 'name',

@@ -1,0 +1,26 @@
+<article class="part" style="{% if article.domain == "partners" %}border-radius: 0px; border-bottom: 1px #444444 solid;{% endif %}">
+  <img class="{% if article.rightAlign %}imageRight{% else %}imageLeft{% endif %}"
+       src="{{ asset('uploads/img/' ~ article.image) }}"
+       style="{% if article.domain == "partners" %}width: 25%;{% endif %}">
+  <h2>{{ article.title }}</h2>
+  <p class="normalP">
+    {{ article.text }}
+    <a href="#" class="more internal-link" data-target="more-{{ article.id }}"> See More...</a>
+  </p>
+  <p id="more-{{ article.id }}" class="hide">{{ article.moreText }}</p>
+  <p class="link-publication">
+  {% if article.publications|length > 1 %}
+    See more information in these publications : <br />
+    {% for publication in article.publications %}
+    - <a href="{{ asset('uploads/img/' ~ publication.file) }}" target="_blank">{{ publication.name }}</a>
+    {% endfor %}
+  {% elseif article.publications|length > 0 %}
+    See further information in this publication :
+    {% for publication in article.publications %}
+      <a href="{{ asset('uploads/img/' ~ publication.file) }}" target="_blank">{{ publication.name }}</a>
+    {% endfor %}
+  {% endif %}
+  </p>
+  <p style="clear: both;"></p>
+
+</article>

@@ -10,6 +10,7 @@
         {% set input_form="PNTSiteBundle:Utils:form_input.html.twig" %}
         {% set save_form="PNTSiteBundle:Utils:form_save.html.twig" %}
         {{ include(input_form, {'element': form.title, 'name':"Title"}) }}
+        {{ include(input_form, {'element': form.domain, 'name':"Page"}) }}
         {{ include(input_form, {'element': form.text, 'name':"Text"}) }}
         {{ include(input_form, {'element': form.more_text, 'name':"Additional text"}) }}
         {% if articleId != 0 and img != '' %}
@@ -17,6 +18,11 @@
         <img src="{{ asset('uploads/img/' ~ img) }}" class="img-thumbnail" width="300">
         {% endif %}
         {{ include(input_form, {'element': form.image, 'name':"Add an image"}) }}
+        <div style="margin-top: 10px;">
+          {{ form_errors(form.right_align) }}
+          {{ form_widget(form.right_align, {'attr': {'class': 'internal-link keep', 'data-target': '#price'}}) }}
+          {{ form_label(form.right_align, "Align on the right", {'label_attr' : {'class': 'internal-link keep', 'data-target': '#price'}}) }}
+        </div>
         <hr />
         <div style="margin-top: 10px;">
           <h5>{{ form_label(form.publications, "Link some publications") }}</h5>
