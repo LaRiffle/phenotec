@@ -1,0 +1,7 @@
+services:
+    pnt_site.imagehandler:
+        class: PNT\SiteBundle\Handler\PNTImagehandler
+        arguments: [%img_dir%]
+#    pnt_site.example:
+#        class: PNT\SiteBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

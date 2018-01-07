@@ -1,0 +1,75 @@
+
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Phenotec {% block title %}{% endblock %}</title>
+    <meta name="description" content="PhenoTec AG is a pharmaceutical research, service and consulting company." />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{ asset('bundles/PNT/global_style.css') }}">
+    {% block head %}{% endblock %}
+  </head>
+  <body>
+    {% block body %}
+
+    {% endblock %}
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.js"></script>
+    <script>
+      $('textarea').each(function(){
+        this.style.height = "1px";
+        this.style.height = (22+this.scrollHeight)+"px";
+      });
+      $('body').on('keyup', 'textarea', function(e){
+        this.style.height = "1px";
+        this.style.height = (22+this.scrollHeight)+"px";
+      });
+      $('.internal-link').on('click', function(e){
+        // if is link
+        if($(e.target).closest('a').length){
+          e.preventDefault();
+        }
+        var hidden_element_id = $(this).attr('data-target');
+        console.log(hidden_element_id);
+        $(hidden_element_id).show();
+        if(!$(this).hasClass('keep')){
+          $(this).hide();
+        }
+      });
+    </script>
+    {% block script %} {% endblock %}
+    <script>
+    {% if is_granted('ROLE_USER') %}
+    var supprItems = $('.remove');
+    for(i=0; i<supprItems.length; i++){
+        $(supprItems[i]).on('click', function(e){
+            e.preventDefault();
+            var url = this.href;
+            var box = bootbox.dialog({
+                  message: "Confirmer la suppression",
+                  title: "Supprimer cet élément ?",
+                  buttons: {
+                      "Oh non.": {
+                          className: "btn-default",
+                      },
+                      main: {
+                          label: "Supprimer",
+                          className: "btn-danger",
+                          callback: function() {
+                              window.location = url;
+                          }
+                      }
+                  }
+              });
+        });
+    }
+    {% endif %}
+    </script>
+  </body>
+</html>

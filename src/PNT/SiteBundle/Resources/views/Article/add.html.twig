@@ -1,0 +1,40 @@
+{% extends "PNTSiteBundle::layout.html.twig" %}
+{% block body %}
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 offset-sm-3">
+      <form name="form" class="form-signin"
+            method="post" enctype="multipart/form-data"
+            action="{{ path('pnt_site_article_add',{'id': articleId}) }}">
+        <h3 class="form-signin-heading">{% if articleId == 0 %}Add{% else %}Modify{% endif %} a topic</h3>
+        {% set input_form="PNTSiteBundle:Utils:form_input.html.twig" %}
+        {% set save_form="PNTSiteBundle:Utils:form_save.html.twig" %}
+        {{ include(input_form, {'element': form.title, 'name':"Title"}) }}
+        {{ include(input_form, {'element': form.text, 'name':"Text"}) }}
+        {{ include(input_form, {'element': form.more_text, 'name':"Additional text"}) }}
+        {% if articleId != 0 and img != '' %}
+        <div style="margin-top: 1rem; font-weight: bold;">Modify the image</div>
+        <img src="{{ asset('uploads/img/' ~ img) }}" class="img-thumbnail" width="300">
+        {% endif %}
+        {{ include(input_form, {'element': form.image, 'name':"Add an image"}) }}
+        <hr />
+        <div style="margin-top: 10px;">
+          <h5>{{ form_label(form.publications, "Link some publications") }}</h5>
+          {{ form_errors(form.publications) }}
+          <div class="">
+            {% for publication in form.publications %}
+              {% set index = publication.vars.value %}
+              {% set entity = form.publications.vars.choices[index].data %}
+              {{ form_widget(publication) }}
+              {{ entity.name }} >
+              {{ form_label(publication) }}<br />
+            {% endfor %}
+          </div>
+        </div>
+        {{ include(save_form, {'element': form.save, 'name': "Save information"}) }}
+        {{ form_rest(form) }}
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

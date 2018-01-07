@@ -1,0 +1,33 @@
+pnt_site_homepage:
+    path:     /home
+    defaults: { _controller: PNTSiteBundle:Home:home }
+
+pnt_site_article:
+  path:     /admin/article
+  defaults: { _controller: PNTSiteBundle:Article:index }
+pnt_site_article_add:
+  path:     /admin/article/add/{id}
+  defaults: { _controller: PNTSiteBundle:Article:add, id:0 }
+pnt_site_article_show:
+  path:     /admin/article/{id}
+  defaults: { _controller: PNTSiteBundle:Article:show }
+  requirements:
+      id:   \d+
+pnt_site_article_remove:
+  path:     /admin/article/remove/{id}
+  defaults: { _controller: PNTSiteBundle:Article:remove}
+
+pnt_site_publication:
+  path:     /admin/publication
+  defaults: { _controller: PNTSiteBundle:Publication:index }
+pnt_site_publication_add:
+  path:     /admin/publication/add/{id}
+  defaults: { _controller: PNTSiteBundle:Publication:add, id:0 }
+pnt_site_publication_show:
+  path:     /admin/publication/{id}
+  defaults: { _controller: PNTSiteBundle:Publication:show }
+  requirements:
+      id:   \d+
+pnt_site_publication_remove:
+  path:     /admin/publication/remove/{id}
+  defaults: { _controller: PNTSiteBundle:Publication:remove}

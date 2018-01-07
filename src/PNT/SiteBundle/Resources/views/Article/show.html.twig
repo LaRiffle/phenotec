@@ -1,0 +1,7 @@
+{% extends "PNTSiteBundle::layout.html.twig" %}
+{% block body %}
+  <h2>{{ publication.name }}</h2>
+  {% set edition_buttons="PNTSiteBundle:Utils:edition.html.twig" %}
+  {{ include(edition_buttons, {'edit': path('pnt_site_publication_add', {'id': publication.id}), 'remove': path('pnt_site_publication_remove', {'id': publication.id}) }) }}
+  <p><a href="{{ asset('uploads/img/' ~ publication.file) }}">{{ publication.file }}</a></p>
+{% endblock %}

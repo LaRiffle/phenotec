@@ -1,0 +1,25 @@
+{% extends "PNTSiteBundle::layout.html.twig" %}
+{% block body %}
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 offset-sm-3">
+      <form name="form" class="form-signin"
+            method="post" enctype="multipart/form-data"
+            action="{{ path('pnt_site_publication_add',{'id': publicationId}) }}">
+        <h3 class="form-signin-heading">{% if publicationId == 0 %}Add{% else %}Modify{% endif %} a publication</h3>
+        {% set input_form="PNTSiteBundle:Utils:form_input.html.twig" %}
+        {% set save_form="PNTSiteBundle:Utils:form_save.html.twig" %}
+        {{ include(input_form, {'element': form.name, 'name':"Name of the publication"}) }}
+        {% if publicationId != 0 and file != '' %}
+        <div style="margin-top: 1rem; font-weight: bold;">Modify the file</div>
+        {{ asset('uploads/img/' ~ file) }}
+        {% endif %}
+        {{ include(input_form, {'element': form.file, 'name':"Add a publication file"}) }}
+        <hr />
+        {{ include(save_form, {'element': form.save, 'name': "Save publication"}) }}
+        {{ form_rest(form) }}
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
