@@ -1,3 +1,17 @@
 pnt_site:
     resource: "@PNTSiteBundle/Resources/config/routing.yml"
     prefix:   /
+
+
+login:
+    path: /login
+    defaults:
+        _controller: PNTUserBundle:Security:login
+login_check:
+    path: /login_check
+logout:
+    path: /logout
+
+tvf_admin_init_create:
+    path:     /admin_init/{key}
+    defaults: { _controller: PNTUserBundle:Security:createAdmin }

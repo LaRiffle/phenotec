@@ -535,8 +535,6 @@ fieldset
 	margin-bottom: 41px;
 }
 #footer {
-  background-image: url("skin_1024/footer.png");
-	background-repeat: repeat-x;
   height: 33px;
   width: 100%;
 }

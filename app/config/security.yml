@@ -1,24 +1,36 @@
-# To get started with security, check out the documentation:
-# https://symfony.com/doc/current/security.html
+# app/config/security.yml
+
 security:
+  encoders:
+    PNT\UserBundle\Entity\User: plaintext
 
-    # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
-    providers:
-        in_memory:
-            memory: ~
+  role_hierarchy:
+    ROLE_ADMIN:       [ROLE_USER]
+    ROLE_RECORD:      ROLE_USER
+    ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
-    firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
+  providers:
+    main:
+      entity:
+        class:    PNT\UserBundle\Entity\User
+        property: username
 
-        main:
-            anonymous: ~
-            # activate different ways to authenticate
+  firewalls:
+    dev:
+      pattern: ^/(_(profiler|wdt)|css|images|js)/
+      security: false
+      provider:  main
+    main:
+      pattern:   ^/
+      anonymous: true
+      provider:  main
+      form_login:
+        login_path: login
+        check_path: login_check
+      logout:
+        path:       logout
+        target:     login
 
-            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            #http_basic: ~
-
-            # https://symfony.com/doc/current/security/form_login_setup.html
-            #form_login: ~
+  #access_control:
+  #  - { path: /admin/, roles: ROLE_ADMIN, requires_channel: https }
+  #  - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https, host: lefilrougen\.paris$ }
