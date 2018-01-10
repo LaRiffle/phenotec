@@ -1,0 +1,27 @@
+{% extends "PNTSiteBundle::layout.html.twig" %}
+
+{% block nav %}
+<div id="head">
+  <div style="height: 4px; background-color: white;"></div>
+  <div id="divFirstTable">
+      <a href="{{ last_url }}" class="btn btn-primary" style="margin: 7px; float: left;">
+        <i class="fa fa-angle-left" aria-hidden="true"></i> Cancel
+      </a>
+      <a href="{{ path('logout') }}" class="logout btn btn-danger">
+        <i class="fa fa-power-off" aria-hidden="true"></i> Log out
+      </a>
+      <table class="topTable"><tr>
+          <td id="title">
+            <a href="{{ path('pnt_site_home') }}">
+              Phenotec
+              <span style="font-size: 32px; font-style: italic">
+                Admin
+              </span>
+            </a>
+          </td>
+      </tr></table>
+  </div>
+</div>
+{% endblock %}
+{% block footer_nav %}
+{% endblock %}

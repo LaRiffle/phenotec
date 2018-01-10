@@ -21,11 +21,21 @@ pnt_site_article:
   path:     /admin/article
   defaults: { _controller: PNTSiteBundle:Article:index }
 pnt_site_article_add:
-  path:     /admin/article/add/{id}
-  defaults: { _controller: PNTSiteBundle:Article:add, id:0 }
+  path:     /admin/article/add/{domain}/{id}
+  defaults: { _controller: PNTSiteBundle:Article:add, domain:'_' ,id:0 }
 pnt_site_article_show:
   path:     /admin/article/{id}
   defaults: { _controller: PNTSiteBundle:Article:show }
+  requirements:
+      id:   \d+
+pnt_site_article_display:
+  path:     /admin/article/display/{id}
+  defaults: { _controller: PNTSiteBundle:Article:display }
+  requirements:
+      id:   \d+
+pnt_site_article_hide:
+  path:     /admin/article/hide/{id}
+  defaults: { _controller: PNTSiteBundle:Article:hide }
   requirements:
       id:   \d+
 pnt_site_article_remove:

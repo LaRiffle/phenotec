@@ -1,0 +1,6 @@
+{% if is_granted('ROLE_ADMIN') %}
+<div class="part" style="margin-bottom: 0px;">
+  <a href="{{ path('pnt_site_article_add', {'domain': page}) }}" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Add a Topic</a>
+  <a href="#" id="sort_{{ page }}" class="btn btn-primary"><i class="fa fa-sort" aria-hidden="true"></i> Reorganize the topics</a>
+</div>
+{% endif %}

@@ -1,8 +1,10 @@
 {% extends "PNTSiteBundle::layout.html.twig" %}
 {% block title %}Research & Consuting{% endblock %}
 {% block body %}
-{% set article_template="PNTSiteBundle:Utils:article_template.html.twig" %}
+{{ include(gestion_page, {'page': 'home' }) }}
 {% for article in articles %}
-  {{ include(article_template, {'article': article }) }}
+  {% if is_granted('ROLE_ADMIN') or article.visible %}
+    {{ include(article_template, {'article': article }) }}
+  {% endif %}
 {% endfor %}
 {% endblock %}

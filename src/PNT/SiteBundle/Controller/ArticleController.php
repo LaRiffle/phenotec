@@ -43,11 +43,19 @@ class ArticleController extends Controller
         ));
     }
 
-    public function addAction(Request $request, $id = 0) {
+    public function addAction(Request $request, $domain, $id = 0) {
         $em = $this->getDoctrine()->getManager();
         $oldFileName = null;
         if($id == 0) {
             $article = new Article();
+            if( !in_array($domain, ['home', 'about-us', 'services', 'news', 'partners', 'contact'])){
+              return new Response(
+                    '<html><body>Invalid domain</body></html>'
+                );
+            }
+            $article->setDomain($domain);
+            $article->setRightAlign(true);
+            $article->setVisible(true);
         } else {
             $repository = $em->getRepository($this->entityNameSpace);
             $article = $repository->find($id);
@@ -87,6 +95,9 @@ class ArticleController extends Controller
                 'multiple'     => true,
                 'expanded'     => true,
                 'required'     => false))
+        ->add('visible', CheckboxType::class, array(
+          'required' => false
+        ))
         ->add('save',	SubmitType::class)
         ->getForm();
 
@@ -121,12 +132,44 @@ class ArticleController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($article);
             $em->flush();
-            return $this->redirect($this->generateUrl('pnt_site_article'));
+            if($request->query->get('remove_image') != null){
+              $article->setImage('');
+              $em->persist($article);
+              $em->flush();
+              return $this->redirect($this->generateUrl('pnt_site_article_add', array(
+                'id' => $article->getId(),
+                'domain' => $article->getDomain(),
+              )));
+            } elseif($request->query->get('new_pub') != null){
+              return $this->redirect($this->generateUrl('pnt_site_publication_add').'?article='.$article->getId());
+            } else {
+              $url = 'pnt_site_home';
+              switch ($article->getDomain()) {
+                case 'about-us':
+                  $url = 'pnt_site_about_us';
+                  break;
+                case 'services':
+                  $url = 'pnt_site_services';
+                  break;
+                case 'news':
+                  $url = 'pnt_site_news';
+                  break;
+                case 'partners':
+                  $url = 'pnt_site_partners';
+                  break;
+                case 'contact':
+                  $url = 'pnt_site_contact';
+                  break;
+              }
+              return $this->redirect($this->generateUrl($url));
+            }
         }
         return $this->render($this->entityNameSpace.':add.html.twig', array(
             'form' => $form->createView(),
             'articleId' => $id,
+            'articleDomain' => $article->getDomain(),
             'img' => $article_img_url,
+            'last_url' => $request->headers->get('referer'),
         ));
     }
     public function removeAction(Request $request, $id){
@@ -134,6 +177,26 @@ class ArticleController extends Controller
         $article = $em->getRepository($this->entityNameSpace)->find($id);
         $em->remove($article);
         $em->flush();
-        return $this->redirect($this->generateUrl('pnt_site_article'));
+        return $this->redirect($request->headers->get('referer'));
+    }
+    public function displayAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository($this->entityNameSpace);
+        $article = $repository->find($id);
+        $article->setVisible(true);
+        $em->persist($article);
+        $em->flush();
+        return $this->redirect($request->headers->get('referer'));
+    }
+    public function hideAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository($this->entityNameSpace);
+        $article = $repository->find($id);
+        $article->setVisible(false);
+        $em->persist($article);
+        $em->flush();
+        return $this->redirect($request->headers->get('referer'));
     }
 }

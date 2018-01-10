@@ -31,6 +31,13 @@ class Article
     private $id;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="lover", type="boolean", options={"default" : true})
+     */
+    private $visible;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
@@ -87,6 +94,30 @@ class Article
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set visible
+     *
+     * @param string $visible
+     *
+     * @return Article
+     */
+    public function setVisible($visible)
+    {
+        $this->visible = $visible;
+
+        return $this;
+    }
+
+    /**
+     * Get visible
+     *
+     * @return string
+     */
+    public function getVisible()
+    {
+        return $this->visible;
     }
 
     /**

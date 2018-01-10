@@ -1,8 +1,24 @@
-<ul class="edition-btn">
-  <li>
-    <a href="{{ edit }}"><i class="fa fa-pencil-square-o"></i></a>
-  </li>
-  <li>
-    <a href="{{ remove }}" class="remove"><i class="fa fa-trash-o"></i></a>
-  </li>
-</ul>
+<div class="edition-box">
+  {% if article is defined %}
+    {% if not article.visible %}
+      <span class="badge badge-warning">Hidden Topic</span>&nbsp;
+      <a href="{{ path('pnt_site_article_display', {'id': article.id})}}">
+        <i class="fa fa-eye" aria-hidden="true"></i> Show
+      </a>
+    {% else %}
+      <a href="{{ path('pnt_site_article_hide', {'id': article.id})}}">
+        <i class="fa fa-eye-slash" aria-hidden="true"></i> Hide Topic
+      </a>
+    {% endif %}
+  {% endif %}
+  <ul class="edition-btn">
+    <li>
+      <a href="{{ edit }}"><i class="fa fa-pencil-square-o"></i> Modify</a>
+    </li>
+    |
+    <li>
+      <a href="{{ remove }}" class="remove"><i class="fa fa-trash-o"></i> Delete</a>
+    </li>
+  </ul>
+  <div style="clear:both"></div>
+</div>

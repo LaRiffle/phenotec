@@ -13,11 +13,22 @@
     {% block head %}{% endblock %}
   </head>
   <body>
+    {% block nav %}
     <div id="head">
   	   <div style="height: 4px; background-color: white;"></div>
   	    <div id="divFirstTable">
+            {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('logout') }}" class="logout btn btn-danger">Log out</a>
+            {% endif %}
   		      <table class="topTable"><tr>
-  		          <td id="title"><a href="{{ path('pnt_site_home') }}">Phenotec <span style="font-size: 28px; margin-left: 73px; position: relative; bottom: 4px;">Research Service & Consulting</span></a></td>
+  		          <td id="title">
+                  <a href="{{ path('pnt_site_home') }}">
+                    Phenotec
+                    <span style="font-size: 28px; margin-left: 73px; position: relative; bottom: 4px;">
+                      Research Service & Consulting
+                    </span>
+                  </a>
+                </td>
   		      </tr></table>
   	    </div>
   		  <div id="head_menu" style="margin-top: 0px; height: 183px;">
@@ -34,10 +45,14 @@
     		<td class="menu_title2" id="contact"><a href="{{ path('pnt_site_contact') }}">Contact</a></td>
   		</tr></table>
 		</div>
+    {% endblock %}
     <section id="body">
+    {% set gestion_page="PNTSiteBundle:Utils:gestion_page.html.twig" %}
+    {% set article_template="PNTSiteBundle:Utils:article_template.html.twig" %}
     {% block body %}
 
     {% endblock %}
+    {% block footer_nav %}
     <article class="part" style="border: none; height: 100px; margin-left: 30px;">
 			<div class="icone2" style="background-image: url('{{ asset('bundles/PNT/skin_1024/006.jpg') }}');"><div class="text_icone"><a href="{{ path('pnt_site_home') }}">Home</a></div></div>
 			<div class="icone2" style="background-image: url('{{ asset('bundles/PNT/skin_1024/007.jpg') }}');"><div class="text_icone"><a href="{{ path('pnt_site_about_us') }}">About us</a></div></div>
@@ -45,9 +60,10 @@
 			<div class="icone2" style="background-image: url('{{ asset('bundles/PNT/skin_1024/009.jpg') }}');"><div class="text_icone"><a href="{{ path('pnt_site_news') }}" style="color: white;">News</a></div></div>
 			<div class="icone2" style="background-image: url('{{ asset('bundles/PNT/skin_1024/010.jpg') }}');"><div class="text_icone"><a href="{{ path('pnt_site_partners') }}">Partners</a></div></div>
 			<div class="icone2" style="background-image: url('{{ asset('bundles/PNT/skin_1024/008.jpg') }}');"><div class="text_icone"><a href="{{ path('pnt_site_contact') }}">Contact</a></div></div>
-			<div class="icone2" style="background-image: url('{{ asset('bundles/PNT/skin_1024/006.jpg') }}');"><div class="text_icone"><a href="#" style="color: #333333;">Website</a></div></div>
+			<div class="icone2" id="about_website" style="background-image: url('{{ asset('bundles/PNT/skin_1024/006.jpg') }}');"><div class="text_icone"><a href="#" style="color: #333333;">Website</a></div></div>
 		</article>
 		<div style="clear: both;"></div>
+    {% endblock %}
     </section>
     <div style="height: 7px; background-color: #555555; width: 100%;"></div>
   	<div id="footer"><p>Phenotec© 2018 — All rights reserved</p></div>
@@ -88,14 +104,14 @@
             e.preventDefault();
             var url = this.href;
             var box = bootbox.dialog({
-                  message: "Confirmer la suppression",
-                  title: "Supprimer cet élément ?",
+                  message: "Confirm the deletion",
+                  title: "Do you want to delete this item ?",
                   buttons: {
-                      "Oh non.": {
+                      "Oh no.": {
                           className: "btn-default",
                       },
                       main: {
-                          label: "Supprimer",
+                          label: "Delete",
                           className: "btn-danger",
                           callback: function() {
                               window.location = url;
@@ -106,6 +122,23 @@
         });
     }
     {% endif %}
+    </script>
+    <script>
+    $('#about_website').on('click', function(e){
+      e.preventDefault();
+      bootbox.alert({
+        message: '<article style="padding-left: 20px">'
+        +'<h1 style="padding-left: 0; margin-left: 0; margin-top: 40px;">The PhenoTec Website</h1>'
+        +'<p><em>This is the new 2018 version of our website issued in July 2012.</em><br />'
+        +'All information here published by PhenoTec\'s team or another person on Phenotec.com remains PhenoTec\'s property and cannot be copy or sell. '
+        +'Thanks for your cooperation.</p>'
+        +'<p>If you have any question or remark, please contact us through \'Contact\' page.</p>'
+        +'<p><a href="{{ path('login') }}">Connexion</a></p>'
+        +'</article>'
+        ,
+        backdrop: true
+      });
+    });
     </script>
     <script>
     var imageHeadCover = document.getElementById('imageHeadCover');

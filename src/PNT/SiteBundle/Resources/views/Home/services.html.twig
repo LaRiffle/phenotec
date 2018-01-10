@@ -2,7 +2,7 @@
 {% block title %} | Services {% endblock %}
 {% block nav_title %}Services{% endblock %}
 {% block body %}
-{% set article_template="PNTSiteBundle:Utils:article_template.html.twig" %}
+{{ include(gestion_page, {'page': 'services' }) }}
 {% for article in articles %}
   {{ include(article_template, {'article': article }) }}
 {% endfor %}

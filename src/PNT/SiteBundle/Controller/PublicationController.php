@@ -98,12 +98,36 @@ class PublicationController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($publication);
             $em->flush();
-            return $this->redirect($this->generateUrl('pnt_site_publication'));
+            if($request->query->get('article') != null){
+              $article_id = $request->query->get('article');
+              $repository = $em->getRepository('PNTSiteBundle:Article');
+              $article = $repository->find($article_id);
+              $article->addPublication($publication);
+              $em->persist($article);
+              $em->flush();
+              return $this->redirect(
+                $this->generateUrl(
+                  'pnt_site_article_add',
+                  array('id' => $article_id)
+                ).'#publication_selected'
+              );
+            } else {
+              return $this->redirect($this->generateUrl('pnt_site_publication'));
+            }
+        }
+        if($request->query->get('article') != null){
+          $back_to_article = $request->query->get('article');
+          $last_url = $this->generateUrl('pnt_site_article_add', array('id' => $back_to_article));
+        } else {
+          $back_to_article = false;
+          $last_url = $request->headers->get('referer');
         }
         return $this->render($this->entityNameSpace.':add.html.twig', array(
             'form' => $form->createView(),
             'publicationId' => $id,
             'file' => $publication_file_url,
+            'last_url' => $last_url,
+            'back_to_article' => $back_to_article,
         ));
     }
     public function removeAction(Request $request, $id){

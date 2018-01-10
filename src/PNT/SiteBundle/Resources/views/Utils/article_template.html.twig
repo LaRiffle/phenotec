@@ -1,18 +1,26 @@
-<article class="part" style="{% if article.domain == "partners" %}border-radius: 0px; border-bottom: 1px #444444 solid;{% endif %}">
+<article class="part" style="{% if article.domain == "partners" and not is_granted('ROLE_ADMIN')%}border-radius: 0px; border-bottom: 1px #444444 solid;{% endif %}">
+  {% if is_granted('ROLE_ADMIN') %}
+    {% set edition_buttons="PNTSiteBundle:Utils:edition.html.twig" %}
+    {{ include(edition_buttons, {'edit': path('pnt_site_article_add', {'id': article.id}), 'remove': path('pnt_site_article_remove', {'id': article.id}) }) }}
+  {% endif %}
+  {% if article.image is not empty %}
   <img class="{% if article.rightAlign %}imageRight{% else %}imageLeft{% endif %}"
        src="{{ asset('uploads/img/' ~ article.image) }}"
        style="{% if article.domain == "partners" %}width: 25%;{% endif %}">
+  {% endif %}
   <h2>{{ article.title }}</h2>
   <p class="normalP">
-    {{ article.text }}
+    {{ article.text|raw|nl2br }}
+    {% if article.moreText|length > 1 %}
     <a href="#" class="more internal-link" data-target="more-{{ article.id }}"> See More...</a>
+    {% endif %}
   </p>
-  <p id="more-{{ article.id }}" class="hide">{{ article.moreText }}</p>
+  <p id="more-{{ article.id }}" class="hide">{{ article.moreText|raw|nl2br }}</p>
   <p class="link-publication">
   {% if article.publications|length > 1 %}
     See more information in these publications : <br />
     {% for publication in article.publications %}
-    - <a href="{{ asset('uploads/img/' ~ publication.file) }}" target="_blank">{{ publication.name }}</a>
+    - <a href="{{ asset('uploads/img/' ~ publication.file) }}" target="_blank">{{ publication.name }}</a><br />
     {% endfor %}
   {% elseif article.publications|length > 0 %}
     See further information in this publication :

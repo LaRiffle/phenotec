@@ -1,46 +1,178 @@
-{% extends "PNTSiteBundle::layout.html.twig" %}
+{% extends "PNTSiteBundle:Utils:form_layout.html.twig" %}
 {% block body %}
-<div class="container">
-  <div class="row">
-    <div class="col-sm-6 offset-sm-3">
-      <form name="form" class="form-signin"
-            method="post" enctype="multipart/form-data"
-            action="{{ path('pnt_site_article_add',{'id': articleId}) }}">
-        <h3 class="form-signin-heading">{% if articleId == 0 %}Add{% else %}Modify{% endif %} a topic</h3>
-        {% set input_form="PNTSiteBundle:Utils:form_input.html.twig" %}
-        {% set save_form="PNTSiteBundle:Utils:form_save.html.twig" %}
-        {{ include(input_form, {'element': form.title, 'name':"Title"}) }}
-        {{ include(input_form, {'element': form.domain, 'name':"Page"}) }}
-        {{ include(input_form, {'element': form.text, 'name':"Text"}) }}
-        {{ include(input_form, {'element': form.more_text, 'name':"Additional text"}) }}
-        {% if articleId != 0 and img != '' %}
-        <div style="margin-top: 1rem; font-weight: bold;">Modify the image</div>
-        <img src="{{ asset('uploads/img/' ~ img) }}" class="img-thumbnail" width="300">
-        {% endif %}
-        {{ include(input_form, {'element': form.image, 'name':"Add an image"}) }}
-        <div style="margin-top: 10px;">
-          {{ form_errors(form.right_align) }}
-          {{ form_widget(form.right_align, {'attr': {'class': 'internal-link keep', 'data-target': '#price'}}) }}
-          {{ form_label(form.right_align, "Align on the right", {'label_attr' : {'class': 'internal-link keep', 'data-target': '#price'}}) }}
+<div class="">
+  <form name="form" class="form-signin hide"
+        id="article_form"
+        method="post" enctype="multipart/form-data"
+        action="{{ path('pnt_site_article_add',{'domain': articleDomain, 'id': articleId}) }}">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <h1 class="form-signin-heading">
+            {% if articleId == 0 %}Add{% else %}Modify{% endif %} a topic
+          </h1>
         </div>
-        <hr />
-        <div style="margin-top: 10px;">
-          <h5>{{ form_label(form.publications, "Link some publications") }}</h5>
-          {{ form_errors(form.publications) }}
-          <div class="">
-            {% for publication in form.publications %}
-              {% set index = publication.vars.value %}
-              {% set entity = form.publications.vars.choices[index].data %}
-              {{ form_widget(publication) }}
-              {{ entity.name }} >
-              {{ form_label(publication) }}<br />
-            {% endfor %}
+        <div class="col-sm-6" id="text-part">
+          <h1 class="form-signin-heading" style="font-size: 0.95rem;">
+            <a href="#" class="internal-link" data-target="form-domain">
+              <i class="fa fa-columns" aria-hidden="true"></i>
+              Modify the owner's page
+            </a>
+          </h1>
+          {% set input_form="PNTSiteBundle:Utils:form_input.html.twig" %}
+          {% set save_form="PNTSiteBundle:Utils:form_save.html.twig" %}
+          <div id="form-domain" class="hide">
+            {{ include(input_form, {'element': form.domain, 'name':"Page in which the topic is displayed"}) }}
+            <hr />
+          </div>
+          {{ include(input_form, {'element': form.title, 'name':"Title"}) }}
+          {{ include(input_form, {'element': form.text, 'name':"Main content"}) }}
+          {{ include(input_form, {'element': form.more_text, 'name':"Additional content"}) }}
+        </div>
+        <div class="col-sm-6" id="img-part">
+          {% if articleId != 0 and img != '' %}
+            <div id="img_preview">
+              <img src="{{ asset('uploads/img/' ~ img) }}" class="img-thumbnail" width="">
+            </div>
+            <a href="#" class="btn btn-primary internal-link" data-target="form-image" style="margin-top: 10px;">Modify the image</a>
+            <a href="#" id="remove_image" class="btn btn-danger" data-target="form-image" style="margin-top: 10px;">Remove the image</a>
+            <span id="form-image" class="hide">{{ include(input_form, {'element': form.image, 'name':"Modify the image"}) }}</span>
+          {% else %}
+            {{ include(input_form, {'element': form.image, 'name':"Add an image"}) }}
+            <div id="img_preview">
+              <div class="img-thumbnail add-img" style="width: 100%; height: 250px;">
+                <p><a href="#" id="add_img_btn">
+                  <i class="fa fa-plus" aria-hidden="true"></i> Add image
+                </a></p>
+              </div>
+            </div>
+          {% endif %}
+          <div style="margin-top: 10px;">
+            {{ form_errors(form.right_align) }}
+            {{ form_widget(form.right_align) }}
+            {{ form_label(form.right_align, "Align on the right", {'label_attr' : {'id': 'right_align'}}) }}
           </div>
         </div>
-        {{ include(save_form, {'element': form.save, 'name': "Save information"}) }}
-        {{ form_rest(form) }}
-      </form>
+        <div class="col-sm-12">
+          <div style="margin-top: 10px;">
+            <h5>{{ form_label(form.publications, "Link some publications") }}</h5>
+            {{ form_errors(form.publications) }}
+            <div id="publication_selected">
+              <ul class="list-group">
+                <div id="last"></div>
+              </ul>
+            </div>
+            <p><a href="#" id="add_publication" class="btn btn-success" style="line-height: 1;">
+                  <i class="fa fa-plus" aria-hidden="true"></i> Add more publications
+            </a></p>
+            <div id="publication_stock" class="hide">
+              {% for publication in form.publications %}
+                <li class="list-group-item input-block"><span>
+                  {% set index = publication.vars.value %}
+                  {% set entity = form.publications.vars.choices[index].data %}
+                  {{ form_widget(publication) }}
+                  {{ form_label(publication) }} ·
+                  <a href="{{ asset('uploads/img/' ~ entity.file) }}" class="like_a_link" target="_blank">See publication</a>
+                </span></li>
+              {% endfor %}
+            </div>
+          </div>
+          <hr />
+          <div style="margin-top: 10px;">
+            {{ form_errors(form.visible) }}
+            {{ form_widget(form.visible) }}
+            {{ form_label(form.visible, "Article visible on the site") }}
+          </div>
+        </div>
+        <div class="col-sm-12">
+          {{ include(save_form, {'element': form.save, 'name': "Save information"}) }}
+          {{ form_rest(form) }}
+        </div>
+      </div>
     </div>
-  </div>
+  </form>
 </div>
+{% endblock %}
+{% block script %}
+<script>
+if(!$('#form_right_align').prop('checked')){
+  $('#img-part').insertBefore($('#text-part'));
+}
+$('form').show();
+$('textarea').each(function(){
+  this.style.height = "1px";
+  this.style.height = (22+this.scrollHeight)+"px";
+});
+$('#form_right_align').on('change', function(){
+  if(!$('#form_right_align').prop('checked')){
+    $('#img-part').insertBefore($('#text-part'));
+  } else {
+    $('#text-part').insertBefore($('#img-part'));
+  }
+  $('textarea').each(function(){
+    this.style.height = "1px";
+    this.style.height = (22+this.scrollHeight)+"px";
+  });
+});
+</script>
+<script>
+/* Dynamic gestion of img */
+$('#add_img_btn').on('click', function(e){
+  e.preventDefault();
+  $('#form_image').click();
+});
+
+function readURL(input) {
+
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      $('#img_preview').html('<img src="'+e.target.result+'" class="img-thumbnail">');
+    }
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+$("#form_image").change(function() {
+  readURL(this);
+});
+
+$('#remove_image').on('click', function(e) {
+  $('#article_form').attr('action', $('#article_form').attr('action') + '?remove_image=yes');
+  $('#form_save').click();
+  e.preventDefault();
+});
+</script>
+<script>
+/* Publication handler */
+$('#publication_stock input').each(function(){
+  if($(this).prop('checked')){
+    $(this).parents('.input-block').insertBefore($('#last'));
+  }
+});
+$('#publication_stock input').on('change', function(){
+  if($(this).prop('checked')){
+    $(this).parents('.input-block').insertBefore($('#last'));
+    $('.modal-dialog button').click();
+  }
+});
+$('#add_publication').on('click', function(e){
+  e.preventDefault();
+  bootbox.alert({
+    message: '<h1>Choose a publication</h1>'
+      +'<div id="bootbox_publi"><ul class="list-group">'
+      + '<a href="#" id="new_pub" class="btn btn-success">+ Add another publication</a>'
+      + $('#publication_stock').html()
+      +'</ul></div>',
+    backdrop: true
+  });
+});
+$('body').on('click', '#new_pub',function(e){
+  e.preventDefault();
+  $('#article_form').attr('action', $('#article_form').attr('action') + '?new_pub=yes');
+  $('#form_save').click();
+});
+</script>
 {% endblock %}

@@ -2,7 +2,7 @@
 {% block title %}| About us{% endblock %}
 {% block nav_title %}About us{% endblock %}
 {% block body %}
-{% set article_template="PNTSiteBundle:Utils:article_template.html.twig" %}
+{{ include(gestion_page, {'page': 'about-us' }) }}
 {% for article in articles %}
   {{ include(article_template, {'article': article }) }}
 {% endfor %}
