@@ -73,7 +73,9 @@ class ArticleController extends Controller
           $article_img_url = '';
         }
         $form = $this->get('form.factory')->createBuilder(FormType::class, $article)
-        ->add('title', TextType::class)
+        ->add('title', TextType::class, array(
+          'required' => false
+        ))
         ->add('domain', ChoiceType::class, array(
             'choices'  => array(
                 'Home' => 'home',
@@ -84,7 +86,9 @@ class ArticleController extends Controller
                 'Contact' => 'contact'
             ),
         ))
-        ->add('text', TextareaType::class)
+        ->add('text', TextareaType::class, array(
+          'required' => false
+        ))
         ->add('more_text', TextareaType::class, array('required' => False))
         ->add('image', FileType::class, array('label' => 'Image', 'required' => False))
         ->add('right_align', CheckboxType::class, array(

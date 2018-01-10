@@ -152,7 +152,7 @@
   		var opacity = 1;
   		imageHeadCover.style.backgroundColor = 'rgba(237, 237, 237, 1)';
   		changeTopDiapo();
-  	}, 5000);
+  	}, 1700);
   	})();
   	var intervalID4 = setInterval(function() {
   	var opacity = 0;
@@ -289,6 +289,7 @@
       $('#reorder').on('click', function(e){
         e.preventDefault();
         $('.reorder-box').fadeIn();
+        $(this).fadeOut();
       });
       $('.btn-up a').on('click', function(e){
         e.preventDefault();
@@ -340,6 +341,11 @@
           }, 100);
         }
       });
+    </script>
+    <script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
     </script>
   </body>
 </html>

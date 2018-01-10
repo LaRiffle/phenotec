@@ -3,6 +3,26 @@
 {% block nav_title %}News{% endblock %}
 {% block body %}
 {{ include(gestion_page, {'page': 'news' }) }}
+{% if not is_granted('ROLE_ADMIN') %}
+  {% set nb_articles = articles|length %}
+  {% if nb_articles >= 4 %}
+    {% if nb_articles > 5 %}
+      {% set nb_articles = 5 %}
+    {% endif %}
+    {% set width = (935-20*nb_articles)/nb_articles %}
+    <div class="previewHeading" style="height: {{ width }}px;">
+      {% for article in articles %}
+        {% if loop.index <= 5 %}
+          <div class="icone5" style="background-image: url('{{ asset('uploads/img/' ~ article.image) }}'); width: {{ width }}px; height: {{ width }}px;">
+            <div class="text_icone2">
+              <a href="#article-{{ article.id }}" style="color: #333333; font-weight: bold;">{{ article.title }}</a>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endif %}
 {% for article in articles %}
   {{ include(article_template, {'article': article }) }}
 {% endfor %}

@@ -159,6 +159,12 @@ body
 	color: white;
 	background-color: rgba(237, 237, 237, 0.7);
 	border-radius: 4px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	width: 95%;
+	max-height: 95%;
 }
 /* Utilities */
 .hide {
@@ -296,6 +302,9 @@ input
 #form_title {
 	font-size: 1.2em;
 }
+.add-img {
+	position: relative;
+}
 .add-img p {
 	margin: 0 !important;
 	text-align: center;
@@ -373,6 +382,7 @@ article a {color: #8888EE;}
 	border-radius: 4px;
 	margin: 8px;
 	padding: 4px;
+	position: relative;
 }
 .icone4 {font-size: 1.1em; padding: 4px;}
 .icone2:hover, .icone2NOFLOAT:hover
@@ -583,7 +593,7 @@ fieldset
 }
 .previewHeading {
 	margin-top: -16px;
-	margin-left: 16px;
+	margin-left: 35px;
 	margin-bottom: 41px;
 }
 /* Reorder articles */
