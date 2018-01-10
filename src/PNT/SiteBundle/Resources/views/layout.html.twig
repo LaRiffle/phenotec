@@ -69,7 +69,6 @@
   	<div id="footer"><p>Phenotec© 2018 — All rights reserved</p></div>
   	<div style="height: 7px; background-color: #555555; width: 100%;"></div>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.js"></script>
@@ -145,110 +144,112 @@
     </script>
     <script>
     var imageHeadCover = document.getElementById('imageHeadCover');
-  	(function() {
-  	setTimeout(function() {
-  		var screenShock = document.getElementById('screenShock');
-  		screenShock.parentNode.removeChild(screenShock);
-  		var opacity = 1;
-  		imageHeadCover.style.backgroundColor = 'rgba(237, 237, 237, 1)';
-  		changeTopDiapo();
-  	}, 1700);
-  	})();
-  	var intervalID4 = setInterval(function() {
-  	var opacity = 0;
-  	var intervalID6bis = setInterval(function() {
-  		if(opacity < 1) {
-  		imageHeadCover.style.backgroundColor = 'rgba(237, 237, 237, '+opacity+')';
-  		opacity += 0.05;
-  		}
-  		else {
-  		clearInterval(intervalID6bis);
-  		opacity = 1;
-  		changeTopDiapo();
-  		}
-  			}, 35);
-  	}, 10000);
-    function changeTopDiapo() {//diaporama haut
-      var tableau = new Array(
-        '/bundles/PNT/carousel/001.jpg',
-        '/bundles/PNT/carousel/002.jpg',
-        '/bundles/PNT/carousel/003.jpg',
-        '/bundles/PNT/carousel/004.jpg',
-        '/bundles/PNT/carousel/005.jpg',
-        '/bundles/PNT/carousel/006.jpg',
-        '/bundles/PNT/carousel/007.jpg',
-        '/bundles/PNT/carousel/008.jpg',
-        '/bundles/PNT/carousel/009.png',
-        '/bundles/PNT/carousel/010.jpg',
-        '/bundles/PNT/carousel/011.jpg'
-      );
-      var max = 8;
-  		document.getElementById('imageHead').innerHTML = "";
-  		var path;
-  		var maxWidth = document.getElementById('imageHead').offsetWidth - 50;
-  		var width = 0;
-  		var imgWidthAdapted;
-  		var nb;
-  		var src;
-  		var id = 0;
-  		var rapport;
-  		var j = 0;
-  		var Img = tableau;
-  		for (var i = 0, c = Img.length; i < c; i++) {
-  			src = tableau[i];
-  			Img[i] = new Image();
-  			Img[i].src = src;
-  			rapport = 163/Img[i].height
-  			Img[i].height = '163';
-  			Img[i].width = Math.floor(Img[i].width*rapport);
+    if(imageHeadCover != null){
+    	(function() {
+    	setTimeout(function() {
+    		var screenShock = document.getElementById('screenShock');
+    		screenShock.parentNode.removeChild(screenShock);
+    		var opacity = 1;
+    		imageHeadCover.style.backgroundColor = 'rgba(237, 237, 237, 1)';
+    		changeTopDiapo();
+    	}, 1700);
+    	})();
+    	var intervalID4 = setInterval(function() {
+    	var opacity = 0;
+    	var intervalID6bis = setInterval(function() {
+    		if(opacity < 1) {
+    		imageHeadCover.style.backgroundColor = 'rgba(237, 237, 237, '+opacity+')';
+    		opacity += 0.05;
+    		}
+    		else {
+    		clearInterval(intervalID6bis);
+    		opacity = 1;
+    		changeTopDiapo();
+    		}
+    			}, 35);
+    	}, 10000);
+      function changeTopDiapo() {//diaporama haut
+        var tableau = new Array(
+          '/bundles/PNT/carousel/001.jpg',
+          '/bundles/PNT/carousel/002.jpg',
+          '/bundles/PNT/carousel/003.jpg',
+          '/bundles/PNT/carousel/004.jpg',
+          '/bundles/PNT/carousel/005.jpg',
+          '/bundles/PNT/carousel/006.jpg',
+          '/bundles/PNT/carousel/007.jpg',
+          '/bundles/PNT/carousel/008.jpg',
+          '/bundles/PNT/carousel/009.png',
+          '/bundles/PNT/carousel/010.jpg',
+          '/bundles/PNT/carousel/011.jpg'
+        );
+        var max = 8;
+    		document.getElementById('imageHead').innerHTML = "";
+    		var path;
+    		var maxWidth = document.getElementById('imageHead').offsetWidth - 50;
+    		var width = 0;
+    		var imgWidthAdapted;
+    		var nb;
+    		var src;
+    		var id = 0;
+    		var rapport;
+    		var j = 0;
+    		var Img = tableau;
+    		for (var i = 0, c = Img.length; i < c; i++) {
+    			src = tableau[i];
+    			Img[i] = new Image();
+    			Img[i].src = src;
+    			rapport = 163/Img[i].height
+    			Img[i].height = '163';
+    			Img[i].width = Math.floor(Img[i].width*rapport);
 
-  			// alert(Img[i].height+'*'+Img[i].width);
-  			// alert(Img[i].width);
-  			// alert(src);
-  			// alert(tableau[i]);
-  			// tableau[i] = src;
-  			// alert(tableau[i]);
-  			// document.getElementById('imageHead').innerHTML += Img[i].src + '<br />';
-  		}
-  		while(width < maxWidth && j<Img.length*3) {
-  			j++;
-  			nb = Math.floor(Math.random() * max);
-  			// document.getElementById('imageHead').innerHTML += 'test de limage : '+nb;
-  			if(Img[nb] != "" && Img[nb].width != 0) { //secu permettant de supprimer des valeurs dans le tableau en les rendant inopérantes ET PREVENIR LES INCOMPATIBILITE SUR IMAGE
-  				width += Img[nb].width;
-  				// document.getElementById('imageHead').innerHTML += ' totalwidth = '+ width;
-  				if(width < maxWidth) {
-  					document.getElementById('imageHead').innerHTML += '<img id="image'+id+'" src="'+Img[nb].src+'" style="height: 163px; margin-right: 8px; border-radius: 8px;">';
-  					id++;
-  				}
-  				else {
-  					width -= Img[nb].width;
-  					// document.getElementById('imageHead').innerHTML += '<br />picture declined, total width ='+ width+'<br />';
-  				}
-  				Img[nb] = ""; //permet "d'enlever" l'image trop grande non-affichée ou celle affichée
-  			}
-  			else {
-  			// document.getElementById('imageHead').innerHTML += '<br />image inexistante<br />';
-  			}
-  		}
-  		imgWidthAdapted = maxWidth/width;
-  		// alert(maxWidth+'/'+width+' = '+imgWidthAdapted);
-  		for (var i = 0; i < id; i++) {
-  			document.getElementById('image'+i).style.width =  Math.floor(document.getElementById('image'+i).offsetWidth * imgWidthAdapted) +'px';
-  		}
-  		var opacity = 1;
-  		var intervalID5bis = setInterval(function() {
-  			if(opacity > 0) {
-  			imageHeadCover.style.backgroundColor = 'rgba(237, 237, 237, '+opacity+')';
-  			// alert(opacity);
-  			opacity -= 0.05;
-  			}
-  			else {
-  			clearInterval(intervalID5bis);
-  			opacity = 0;
-  			}
-  		}, 35);
-  	}
+    			// alert(Img[i].height+'*'+Img[i].width);
+    			// alert(Img[i].width);
+    			// alert(src);
+    			// alert(tableau[i]);
+    			// tableau[i] = src;
+    			// alert(tableau[i]);
+    			// document.getElementById('imageHead').innerHTML += Img[i].src + '<br />';
+    		}
+    		while(width < maxWidth && j<Img.length*3) {
+    			j++;
+    			nb = Math.floor(Math.random() * max);
+    			// document.getElementById('imageHead').innerHTML += 'test de limage : '+nb;
+    			if(Img[nb] != "" && Img[nb].width != 0) { //secu permettant de supprimer des valeurs dans le tableau en les rendant inopérantes ET PREVENIR LES INCOMPATIBILITE SUR IMAGE
+    				width += Img[nb].width;
+    				// document.getElementById('imageHead').innerHTML += ' totalwidth = '+ width;
+    				if(width < maxWidth) {
+    					document.getElementById('imageHead').innerHTML += '<img id="image'+id+'" src="'+Img[nb].src+'" style="height: 163px; margin-right: 8px; border-radius: 8px;">';
+    					id++;
+    				}
+    				else {
+    					width -= Img[nb].width;
+    					// document.getElementById('imageHead').innerHTML += '<br />picture declined, total width ='+ width+'<br />';
+    				}
+    				Img[nb] = ""; //permet "d'enlever" l'image trop grande non-affichée ou celle affichée
+    			}
+    			else {
+    			// document.getElementById('imageHead').innerHTML += '<br />image inexistante<br />';
+    			}
+    		}
+    		imgWidthAdapted = maxWidth/width;
+    		// alert(maxWidth+'/'+width+' = '+imgWidthAdapted);
+    		for (var i = 0; i < id; i++) {
+    			document.getElementById('image'+i).style.width =  Math.floor(document.getElementById('image'+i).offsetWidth * imgWidthAdapted) +'px';
+    		}
+    		var opacity = 1;
+    		var intervalID5bis = setInterval(function() {
+    			if(opacity > 0) {
+    			imageHeadCover.style.backgroundColor = 'rgba(237, 237, 237, '+opacity+')';
+    			// alert(opacity);
+    			opacity -= 0.05;
+    			}
+    			else {
+    			clearInterval(intervalID5bis);
+    			opacity = 0;
+    			}
+    		}, 35);
+    	}
+    }
     </script>
     <script>
       function swipe(A, B) {

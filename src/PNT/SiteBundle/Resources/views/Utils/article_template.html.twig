@@ -21,22 +21,24 @@
        src="{{ asset('uploads/img/' ~ article.image) }}"
        style="{% if article.domain == "partners" %}width: 25%;{% endif %}">
   {% endif %}
-  <h2>{{ article.title }}</h2>
-  <p class="normalP">
+  <h2 style="{% if article.text is empty %}font-size:1.5em;{% endif %}">
+    {{ article.title }}
+  </h2>
+  <div>
     {{ article.text|raw|nl2br }}
     {% if article.moreText|length > 1 %}
-    <a href="#" class="more internal-link" data-target="more-{{ article.id }}"> See More...</a>
+    <p><a href="#" class="more internal-link" data-target="more-{{ article.id }}"> Read more</a></p>
     {% endif %}
-  </p>
-  <p id="more-{{ article.id }}" class="hide">{{ article.moreText|raw|nl2br }}</p>
-  <p class="link-publication">
+  </div>
+  <div id="more-{{ article.id }}" class="hide">{{ article.moreText|raw|nl2br }}</div>
+  <p>
   {% if article.publications|length > 1 %}
-    See more information in these publications : <br />
+    <span class="link-publication">See more information in these publications : </span><br />
     {% for publication in article.publications %}
     - <a href="{{ asset('uploads/img/' ~ publication.file) }}" target="_blank">{{ publication.name }}</a><br />
     {% endfor %}
   {% elseif article.publications|length > 0 %}
-    See further information in this publication :
+    <span class="link-publication">See further information in this publication :</span><br />
     {% for publication in article.publications %}
       <a href="{{ asset('uploads/img/' ~ publication.file) }}" target="_blank">{{ publication.name }}</a>
     {% endfor %}

@@ -1,4 +1,9 @@
 {% extends "PNTSiteBundle:Utils:form_layout.html.twig" %}
+{% block head %}
+<!-- Editor style. -->
+<link href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.3/css/froala_editor.min.css' rel='stylesheet' type='text/css' />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.3/css/froala_style.min.css' rel='stylesheet' type='text/css' />
+{% endblock %}
 {% block body %}
 <div class="">
   <form name="form" class="form-signin hide"
@@ -27,7 +32,9 @@
           </div>
           {{ include(input_form, {'element': form.title, 'name':"Title"}) }}
           {{ include(input_form, {'element': form.text, 'name':"Main content"}) }}
+          <div id="froala-editor1" class="froala"></div>
           {{ include(input_form, {'element': form.more_text, 'name':"Additional content"}) }}
+          <div id="froala-editor2" class="froala"></div>
         </div>
         <div class="col-sm-6" id="img-part">
           {% if articleId != 0 and img != '' %}
@@ -96,6 +103,7 @@
 </div>
 {% endblock %}
 {% block script %}
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.3/js/froala_editor.min.js'></script>
 <script>
 if(!$('#form_right_align').prop('checked')){
   $('#img-part').insertBefore($('#text-part'));
@@ -176,5 +184,25 @@ $('body').on('click', '#new_pub',function(e){
   $('#article_form').attr('action', $('#article_form').attr('action') + '?new_pub=yes');
   $('#form_save').click();
 });
+</script>
+<script>
+  $('#form_text').hide();
+  $('#form_more_text').hide();
+  $('div#froala-editor1').froalaEditor({
+    toolbarButtons: [
+      'bold', 'italic', 'underline', 'paragraphFormat', 'formatOL', 'formatUL', '|', 'undo', 'redo'
+    ]
+  })
+  $('div#froala-editor2').froalaEditor({
+    toolbarButtons: [
+      'bold', 'italic', 'underline', 'paragraphFormat', 'formatOL', 'formatUL', '|', 'undo', 'redo'
+    ]
+  })
+  $('div#froala-editor1').froalaEditor('html.set', $('#form_text').val());
+  $('div#froala-editor2').froalaEditor('html.set', $('#form_more_text').val());
+  setInterval(function(){
+    $('#form_text').val($('div#froala-editor1').froalaEditor('html.get'));
+    $('#form_more_text').val($('div#froala-editor2').froalaEditor('html.get'));
+  }, 1000);
 </script>
 {% endblock %}

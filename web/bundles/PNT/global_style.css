@@ -1,7 +1,7 @@
 body
 {
 	width: 1024px;
-	margin: auto;
+	margin: auto !important;
 	font-family: "Lucida Grande", "Lucida Sans Unicode", Calibri, Helvetica, Verdana, "Book Antiqua",  serif;
 	background-color: rgb(250,250,250);
 }
@@ -255,9 +255,14 @@ ul.edition-btn li:after {
 #body p
 {
 	margin: 16px;
+	margin-bottom: 7px;
+	margin-top: 7px;
 	margin-left: 28px;
 	color: #151515;
 	font-size: 1.0em;
+}
+.froala p {
+	margin: 0 !important;
 }
 h1
 {
@@ -320,6 +325,15 @@ input
 .input-block {
 	padding-bottom: 5px;
 }
+#bootbox_publi label {
+	display: inline;
+}
+#bootbox_publi label:hover{
+	cursor: pointer;
+}
+#bootbox_publi input {
+	display: none;
+}
 #new_pub {
 	margin: 10px;
 }
@@ -356,8 +370,9 @@ button
 	color: #AAAAAA;
 	text-align : center;
 }
-article a {color: #8888EE;}
-.normalP{ margin-left: 16px;}
+article a {
+	color: rgb(2,117,216);
+}
 .icone, .icone2, .icone2NOFLOAT, .icone4, .icone2_hidden {
 	border: 1px #777777 solid;
 	border-radius: 4px;
@@ -424,12 +439,7 @@ article a {color: #8888EE;}
 .more{
 	white-space: nowrap;
 	background:none;
-    border:none;
-	color: #AAAAAA;
-	font-size: 0.9em;
-}
-.more:hover {
-  color: #AAAAAA;
+  border:none;
 }
 .more:hover {
 	cursor:pointer;
