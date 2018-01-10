@@ -12,7 +12,7 @@ class HomeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PNTSiteBundle:Article');
-        $articles = $repository->findBy(array('domain'=>'home'));
+        $articles = $repository->findBy(array('domain'=>'home'), array('order' => 'desc'));
         return $this->render($this->entityNameSpace.':home.html.twig', array(
           'articles' => $articles,
         ));
@@ -21,7 +21,7 @@ class HomeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PNTSiteBundle:Article');
-        $articles = $repository->findBy(array('domain'=>'about-us'));
+        $articles = $repository->findBy(array('domain'=>'about-us'), array('order' => 'desc'));
         return $this->render($this->entityNameSpace.':aboutUs.html.twig', array(
           'articles' => $articles,
         ));
@@ -30,7 +30,7 @@ class HomeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PNTSiteBundle:Article');
-        $articles = $repository->findBy(array('domain'=>'services'));
+        $articles = $repository->findBy(array('domain'=>'services'), array('order' => 'desc'));
         return $this->render($this->entityNameSpace.':services.html.twig', array(
           'articles' => $articles,
         ));
@@ -39,7 +39,7 @@ class HomeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PNTSiteBundle:Article');
-        $articles = $repository->findBy(array('domain'=>'news'));
+        $articles = $repository->findBy(array('domain'=>'news'), array('order' => 'desc'));
         return $this->render($this->entityNameSpace.':news.html.twig', array(
           'articles' => $articles,
         ));
@@ -48,7 +48,7 @@ class HomeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PNTSiteBundle:Article');
-        $articles = $repository->findBy(array('domain'=>'partners'));
+        $articles = $repository->findBy(array('domain'=>'partners'), array('order' => 'desc'));
         return $this->render($this->entityNameSpace.':partners.html.twig', array(
           'articles' => $articles,
         ));
@@ -57,7 +57,7 @@ class HomeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('PNTSiteBundle:Article');
-        $articles = $repository->findBy(array('domain'=>'contact'));
+        $articles = $repository->findBy(array('domain'=>'contact'), array('order' => 'desc'));
         return $this->render($this->entityNameSpace.':contact.html.twig', array(
           'articles' => $articles,
         ));

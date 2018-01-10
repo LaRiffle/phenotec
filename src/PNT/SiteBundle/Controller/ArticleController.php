@@ -6,6 +6,7 @@ use PNT\SiteBundle\Entity\Article;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\File\File;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -132,6 +133,11 @@ class ArticleController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($article);
             $em->flush();
+            if($id == 0){
+                $article->setOrder($article->getId());
+                $em->persist($article);
+                $em->flush();
+            }
             if($request->query->get('remove_image') != null){
               $article->setImage('');
               $em->persist($article);
@@ -198,5 +204,24 @@ class ArticleController extends Controller
         $em->persist($article);
         $em->flush();
         return $this->redirect($request->headers->get('referer'));
+    }
+    public function swipeAction(Request $request) {
+      $em = $this->getDoctrine()->getManager();
+      $repository = $em->getRepository($this->entityNameSpace);
+
+      $from_id = $request->request->get('from_id');
+      $from_order = $request->request->get('from_order');
+      $to_id = $request->request->get('to_id');
+      $to_order = $request->request->get('to_order');
+
+      $article_from = $repository->find($from_id);
+      $article_from->setOrder($to_order);
+      $article_to = $repository->find($to_id);
+      $article_to->setOrder($from_order);
+
+      $em->persist($article_from);
+      $em->persist($article_to);
+      $em->flush();
+      return new JsonResponse(['OK' => 'Done.']);
     }
 }

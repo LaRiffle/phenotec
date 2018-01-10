@@ -1,5 +1,17 @@
-<article class="part" style="{% if article.domain == "partners" and not is_granted('ROLE_ADMIN')%}border-radius: 0px; border-bottom: 1px #444444 solid;{% endif %}">
+<article class="part"
+         data-id="{{ article.id }}"
+         data-order="{{ article.order }}"
+         style="{% if article.domain == "partners" and not is_granted('ROLE_ADMIN')%}border-radius: 0px; border-bottom: 1px #444444 solid;{% endif %}"
+>
   {% if is_granted('ROLE_ADMIN') %}
+    <div class="reorder-box hide">
+      <div class="btn-up top_circle_icon">
+        <a href="#"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
+      </div>
+      <div class="btn-down top_circle_icon">
+        <a href="#"><i class="fa fa-chevron-down" aria-hidden="true"></i></a>
+      </div>
+    </div>
     {% set edition_buttons="PNTSiteBundle:Utils:edition.html.twig" %}
     {{ include(edition_buttons, {'edit': path('pnt_site_article_add', {'id': article.id}), 'remove': path('pnt_site_article_remove', {'id': article.id}) }) }}
   {% endif %}

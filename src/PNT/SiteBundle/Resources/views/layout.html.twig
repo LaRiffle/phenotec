@@ -24,7 +24,7 @@
   		          <td id="title">
                   <a href="{{ path('pnt_site_home') }}">
                     Phenotec
-                    <span style="font-size: 28px; margin-left: 73px; position: relative; bottom: 4px;">
+                    <span style="font-size: 28px; margin-left: 73px; position: relative; bottom: 6px;">
                       Research Service & Consulting
                     </span>
                   </a>
@@ -38,7 +38,7 @@
     <div id="bodytitle2">
   		<table class="topTable"><tr>
     		<td id="main_message" style="text-transform: capitalize;">{% block nav_title %}Welcome{% endblock %}</td>
-    		<td class="menu_title2" id="about us"><a href="{{ path('pnt_site_about_us') }}">About us</a></td>
+    		<td class="menu_title2" id="about-us"><a href="{{ path('pnt_site_about_us') }}">About us</a></td>
     		<td class="menu_title2" id="services"><a href="{{ path('pnt_site_services') }}">Services</a></td>
     		<td class="menu_title2" id="news"><a href="{{ path('pnt_site_news') }}">News</a></td>
     		<td class="menu_title2" id="partners"><a href="{{ path('pnt_site_partners') }}">Partners</a></td>
@@ -53,7 +53,7 @@
 
     {% endblock %}
     {% block footer_nav %}
-    <article class="part" style="border: none; height: 100px; margin-left: 30px;">
+    <section class="part" style="border: none; height: 100px; margin-left: 30px;">
 			<div class="icone2" style="background-image: url('{{ asset('bundles/PNT/skin_1024/006.jpg') }}');"><div class="text_icone"><a href="{{ path('pnt_site_home') }}">Home</a></div></div>
 			<div class="icone2" style="background-image: url('{{ asset('bundles/PNT/skin_1024/007.jpg') }}');"><div class="text_icone"><a href="{{ path('pnt_site_about_us') }}">About us</a></div></div>
 			<div class="icone2" style="background-image: url('{{ asset('bundles/PNT/skin_1024/008.jpg') }}');"><div class="text_icone"><a href="{{ path('pnt_site_services') }}">Services</a></div></div>
@@ -61,7 +61,7 @@
 			<div class="icone2" style="background-image: url('{{ asset('bundles/PNT/skin_1024/010.jpg') }}');"><div class="text_icone"><a href="{{ path('pnt_site_partners') }}">Partners</a></div></div>
 			<div class="icone2" style="background-image: url('{{ asset('bundles/PNT/skin_1024/008.jpg') }}');"><div class="text_icone"><a href="{{ path('pnt_site_contact') }}">Contact</a></div></div>
 			<div class="icone2" id="about_website" style="background-image: url('{{ asset('bundles/PNT/skin_1024/006.jpg') }}');"><div class="text_icone"><a href="#" style="color: #333333;">Website</a></div></div>
-		</article>
+		</section>
 		<div style="clear: both;"></div>
     {% endblock %}
     </section>
@@ -93,6 +93,9 @@
         if(!$(this).hasClass('keep')){
           $(this).hide();
         }
+      });
+      $('#bodytitle2 td.menu_title2').on('click', function(){
+        window.location = $(this).find('a').attr('href');
       });
     </script>
     {% block script %} {% endblock %}
@@ -127,10 +130,10 @@
     $('#about_website').on('click', function(e){
       e.preventDefault();
       bootbox.alert({
-        message: '<article style="padding-left: 20px">'
+        message: '<article style="padding-left: 20px; padding-right: 20px:">'
         +'<h1 style="padding-left: 0; margin-left: 0; margin-top: 40px;">The PhenoTec Website</h1>'
         +'<p><em>This is the new 2018 version of our website issued in July 2012.</em><br />'
-        +'All information here published by PhenoTec\'s team or another person on Phenotec.com remains PhenoTec\'s property and cannot be copy or sell. '
+        +'All information here published by PhenoTec\'s team or another person on Phenotec.com remains PhenoTec\'s property and can not be copied or sold. '
         +'Thanks for your cooperation.</p>'
         +'<p>If you have any question or remark, please contact us through \'Contact\' page.</p>'
         +'<p><a href="{{ path('login') }}">Connexion</a></p>'
@@ -246,6 +249,97 @@
   			}
   		}, 35);
   	}
+    </script>
+    <script>
+      function swipe(A, B) {
+        /* Make the ajax call to swipe the order of the article */
+        var from = {
+          id: A.attr('data-id'),
+          order: A.attr('data-order')
+        }
+        var to = {
+          id: B.attr('data-id'),
+          order: B.attr('data-order')
+        }
+        $.ajax({
+            url:'{{ (path('pnt_site_article_swipe')) }}',
+            type: "POST",
+            dataType: "json",
+            data: {
+                "from_id": from.id,
+                "from_order": from.order,
+                "to_id": to.id,
+                "to_order": to.order
+            },
+            async: true,
+            success: function (data)
+            {
+                console.log('Swipe done. '+ from.order + ' <-> ' + to.order);
+            }
+        });
+      }
+      var btn_first_click = true;
+      var link_clicked = false;
+      $('.top_circle_icon').on('click', function(){
+        if(btn_first_click){
+            btn_first_click = false;
+            $(this).find('a').click();
+        }
+      });
+      $('#reorder').on('click', function(e){
+        e.preventDefault();
+        $('.reorder-box').fadeIn();
+      });
+      $('.btn-up a').on('click', function(e){
+        e.preventDefault();
+        if(!link_clicked){
+          link_clicked = true;
+          setTimeout(function(){
+            btn_first_click = true;
+          }, 100);
+          var article = $(this).parents('article.part');
+          var up_article = article.prev('article.part');
+          if(up_article.length){
+            $.when(
+              article.slideUp()
+            ).done(function(){
+              article.insertBefore(up_article);
+              article.slideDown();
+            });
+            swipe(article, up_article);
+          } else {
+            console.log('Already at the top.');
+          }
+          setTimeout(function(){
+            link_clicked = false;
+          }, 100);
+        }
+      });
+      $('.btn-down a').on('click', function(e){
+        e.preventDefault();
+        if(!link_clicked){
+          link_clicked = true;
+          setTimeout(function(){
+            btn_first_click = true;
+          }, 100);
+          var article = $(this).parents('article.part');
+          var down_article = article.next('article.part');
+          if(down_article.length){
+            $.when(
+              article.slideUp()
+            ).done(function(){
+              down_article.insertBefore(article);
+              article.slideDown();
+            });
+            swipe(article, down_article);
+          } else {
+            console.log('Already at the bottom.');
+          }
+          setTimeout(function(){
+            link_clicked = false;
+          }, 100);
+        }
+      });
     </script>
   </body>
 </html>

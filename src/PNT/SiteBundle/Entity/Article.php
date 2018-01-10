@@ -31,9 +31,16 @@ class Article
     private $id;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="orderindex", type="integer", nullable=true)
+     */
+     private $order;
+
+    /**
      * @var bool
      *
-     * @ORM\Column(name="lover", type="boolean", options={"default" : true})
+     * @ORM\Column(name="visible", type="boolean", options={"default" : true})
      */
     private $visible;
 
@@ -94,6 +101,30 @@ class Article
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set order
+     *
+     * @param int $order
+     *
+     * @return Article
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
+
+        return $this;
+    }
+
+    /**
+     * Get order
+     *
+     * @return int
+     */
+    public function getOrder()
+    {
+        return $this->order;
     }
 
     /**

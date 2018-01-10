@@ -60,11 +60,13 @@
             <div id="publication_selected">
               <ul class="list-group">
                 <div id="last"></div>
+                <li class="list-group-item">
+                  <a href="#" id="add_publication">
+                    <i class="fa fa-plus" aria-hidden="true"></i> Add more publications
+                  </a>
+                </li>
               </ul>
             </div>
-            <p><a href="#" id="add_publication" class="btn btn-success" style="line-height: 1;">
-                  <i class="fa fa-plus" aria-hidden="true"></i> Add more publications
-            </a></p>
             <div id="publication_stock" class="hide">
               {% for publication in form.publications %}
                 <li class="list-group-item input-block"><span>

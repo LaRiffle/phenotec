@@ -41,6 +41,9 @@ pnt_site_article_hide:
 pnt_site_article_remove:
   path:     /admin/article/remove/{id}
   defaults: { _controller: PNTSiteBundle:Article:remove}
+pnt_site_article_swipe:
+  path:     /admin/article/swipe
+  defaults: { _controller: PNTSiteBundle:Article:swipe}
 
 pnt_site_publication:
   path:     /admin/publication

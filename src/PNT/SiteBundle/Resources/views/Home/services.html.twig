@@ -7,3 +7,8 @@
   {{ include(article_template, {'article': article }) }}
 {% endfor %}
 {% endblock %}
+{% block script %}
+<script>
+  $('#services').addClass('selected');
+</script>
+{% endblock %}
