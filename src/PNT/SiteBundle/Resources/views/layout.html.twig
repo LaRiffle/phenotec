@@ -24,7 +24,7 @@
   		          <td id="title">
                   <a href="{{ path('pnt_site_home') }}">
                     Phenotec
-                    <span style="font-size: 28px; margin-left: 73px; position: relative; bottom: 6px;">
+                    <span style="font-size: 28px; margin-left: 73px; position: relative; bottom: 5px;">
                       Research Service & Consulting
                     </span>
                   </a>
@@ -213,6 +213,7 @@
     			Img[i].width = Math.floor(Img[i].width*rapport);
           Img[i].valid = true;
     		}
+        // console.log('----')
     		while(width < maxWidth && j<Img.length*3) {
     			j++;
     			nb = Math.floor(Math.random() * max);
@@ -221,7 +222,8 @@
     				width += Img[nb].width;
     				// document.getElementById('imageHead').innerHTML += ' totalwidth = '+ width;
     				if(width < maxWidth) {
-    					document.getElementById('imageHead').innerHTML += '<img id="image'+id+'" src="'+Img[nb].src+'" style="height: 163px; margin-right: 8px; border-radius: 8px;">';
+              var img_width = Img[nb].width;
+    					document.getElementById('imageHead').innerHTML += '<img id="image'+id+'" src="'+Img[nb].src+'" style="height: 163px; width: '+img_width+'px; margin-right: 8px; border-radius: 8px;">';
     					id++;
     				}
     				else {
