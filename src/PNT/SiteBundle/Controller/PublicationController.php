@@ -100,11 +100,14 @@ class PublicationController extends Controller
             $em->flush();
             if($request->query->get('article') != null){
               $article_id = $request->query->get('article');
-              $repository = $em->getRepository('PNTSiteBundle:Article');
-              $article = $repository->find($article_id);
-              $article->addPublication($publication);
-              $em->persist($article);
-              $em->flush();
+              // if new publication, add it by default to the article, otherwise it's already done
+              if($id == 0){
+                $repository = $em->getRepository('PNTSiteBundle:Article');
+                $article = $repository->find($article_id);
+                $article->addPublication($publication);
+                $em->persist($article);
+                $em->flush();
+              }
               return $this->redirect(
                 $this->generateUrl(
                   'pnt_site_article_add',
@@ -135,6 +138,16 @@ class PublicationController extends Controller
         $publication = $em->getRepository($this->entityNameSpace)->find($id);
         $em->remove($publication);
         $em->flush();
-        return $this->redirect($this->generateUrl('pnt_site_publication'));
+        if($request->query->get('article') != null){
+          $article_id = $request->query->get('article');
+          return $this->redirect(
+            $this->generateUrl(
+              'pnt_site_article_add',
+              array('id' => $article_id)
+            ).'#publication_selected'
+          );
+        } else {
+          return $this->redirect($this->generateUrl('pnt_site_publication'));
+        }
     }
 }

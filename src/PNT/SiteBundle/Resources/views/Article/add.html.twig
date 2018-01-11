@@ -80,8 +80,10 @@
                   {% set index = publication.vars.value %}
                   {% set entity = form.publications.vars.choices[index].data %}
                   {{ form_widget(publication) }}
-                  {{ form_label(publication) }} ·
-                  <a href="{{ asset('uploads/img/' ~ entity.file) }}" class="like_a_link" target="_blank">See publication</a>
+                  {{ form_label(publication) }}
+                  · <a href="{{ asset('uploads/img/' ~ entity.file) }}" class="like_a_link" target="_blank">See publication</a>
+                  · <a class="edit-pub" data-id="{{ entity.id }}" href="{{ path('pnt_site_publication_add', {'id': entity.id}) }}"><i class="fa fa-pencil-square-o"></i> Modify</a>
+                  · <a class="del-pub" data-id="{{ entity.id }}" href="#" class="remove"><i class="fa fa-trash-o"></i> Delete</a>
                 </span></li>
               {% endfor %}
             </div>
@@ -171,6 +173,7 @@ $('#publication_stock input').on('change', function(){
 $('#add_publication').on('click', function(e){
   e.preventDefault();
   bootbox.alert({
+    size: "large",
     message: '<h1>Choose a publication</h1>'
       +'<div id="bootbox_publi"><ul class="list-group">'
       + '<a href="#" id="new_pub" class="btn btn-success">+ Add another publication</a>'
@@ -179,10 +182,38 @@ $('#add_publication').on('click', function(e){
     backdrop: true
   });
 });
+/* Handle special actions to edit publications */
 $('body').on('click', '#new_pub',function(e){
   e.preventDefault();
   $('#article_form').attr('action', $('#article_form').attr('action') + '?new_pub=yes');
   $('#form_save').click();
+});
+$('body').on('click', '.edit-pub', function(e){
+  e.preventDefault();
+  var id = $(this).attr('data-id');
+  $('#article_form').attr('action', $('#article_form').attr('action') + '?edit_pub='+id);
+  $('#form_save').click();
+});
+$('body').on('click', '.del-pub', function(e){
+  e.preventDefault();
+  var id = $(this).attr('data-id');
+  var box = bootbox.dialog({
+      message: "Confirm the deletion",
+      title: "Do you want to delete this item ?",
+      buttons: {
+          "Oh no.": {
+              className: "btn-default",
+          },
+          main: {
+              label: "Delete",
+              className: "btn-danger",
+              callback: function() {
+                $('#article_form').attr('action', $('#article_form').attr('action') + '?del_pub='+id);
+                $('#form_save').click();
+              }
+          }
+      }
+  });
 });
 </script>
 <script>

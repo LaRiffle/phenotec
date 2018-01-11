@@ -264,6 +264,15 @@ ul.edition-btn li:after {
 .froala p {
 	margin: 0 !important;
 }
+.froala .fr-wrapper div {
+    display: none;
+}
+.froala .fr-wrapper .fr-element.fr-view {
+		display: block !important;
+}
+.froala .fr-placeholder {
+	margin-top: 0px !important;
+}
 h1
 {
 	color: #222222;

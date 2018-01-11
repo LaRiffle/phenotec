@@ -152,7 +152,13 @@ class ArticleController extends Controller
               )));
             } elseif($request->query->get('new_pub') != null){
               return $this->redirect($this->generateUrl('pnt_site_publication_add').'?article='.$article->getId());
-            } else {
+            } elseif($request->query->get('edit_pub') != null){
+              $id = $request->query->get('edit_pub');
+              return $this->redirect($this->generateUrl('pnt_site_publication_add', ['id'=>$id]).'?article='.$article->getId());
+            } elseif($request->query->get('del_pub') != null){
+              $id = $request->query->get('del_pub');
+              return $this->redirect($this->generateUrl('pnt_site_publication_remove', ['id'=>$id]).'?article='.$article->getId());
+            }else {
               $url = 'pnt_site_home';
               switch ($article->getDomain()) {
                 case 'about-us':

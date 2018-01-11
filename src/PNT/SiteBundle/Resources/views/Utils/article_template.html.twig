@@ -13,7 +13,6 @@
         <a href="#" data-toggle="tooltip" data-placement="right" title="Move the topic down"><i class="fa fa-chevron-down" aria-hidden="true"></i></a>
       </div>
     </div>
-    {% set edition_buttons="PNTSiteBundle:Utils:edition.html.twig" %}
     {{ include(edition_buttons, {'edit': path('pnt_site_article_add', {'id': article.id}), 'remove': path('pnt_site_article_remove', {'id': article.id}) }) }}
   {% endif %}
   {% if article.image is not empty %}
