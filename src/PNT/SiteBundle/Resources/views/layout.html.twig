@@ -169,20 +169,26 @@
     		}
     			}, 35);
     	}, 10000);
+      var tableau = new Array(
+        '{{ asset('bundles/PNT/carousel/001.jpg') }}',
+        '{{ asset('bundles/PNT/carousel/002.jpg') }}',
+        '{{ asset('bundles/PNT/carousel/003.jpg') }}',
+        '{{ asset('bundles/PNT/carousel/004.jpg') }}',
+        '{{ asset('bundles/PNT/carousel/005.jpg') }}',
+        '{{ asset('bundles/PNT/carousel/006.jpg') }}',
+        '{{ asset('bundles/PNT/carousel/007.jpg') }}',
+        '{{ asset('bundles/PNT/carousel/008.jpg') }}',
+        '{{ asset('bundles/PNT/carousel/009.jpg') }}',
+        '{{ asset('bundles/PNT/carousel/010.jpg') }}',
+        '{{ asset('bundles/PNT/carousel/011.jpg') }}'
+      );
+      var Img = [];
+      for (var i = 0, c = tableau.length; i < c; i++) {
+        src = tableau[i];
+        Img[i] = new Image();
+        Img[i].src = src;
+      }
       function changeTopDiapo() {//diaporama haut
-        var tableau = new Array(
-          '{{ asset('bundles/PNT/carousel/001.jpg') }}',
-          '{{ asset('bundles/PNT/carousel/002.jpg') }}',
-          '{{ asset('bundles/PNT/carousel/003.jpg') }}',
-          '{{ asset('bundles/PNT/carousel/004.jpg') }}',
-          '{{ asset('bundles/PNT/carousel/005.jpg') }}',
-          '{{ asset('bundles/PNT/carousel/006.jpg') }}',
-          '{{ asset('bundles/PNT/carousel/007.jpg') }}',
-          '{{ asset('bundles/PNT/carousel/008.jpg') }}',
-          '{{ asset('bundles/PNT/carousel/009.jpg') }}',
-          '{{ asset('bundles/PNT/carousel/010.jpg') }}',
-          '{{ asset('bundles/PNT/carousel/011.jpg') }}'
-        );
         var max = 8;
     		document.getElementById('imageHead').innerHTML = "";
     		var path;
@@ -194,11 +200,7 @@
     		var id = 0;
     		var rapport;
     		var j = 0;
-    		var Img = tableau;
     		for (var i = 0, c = Img.length; i < c; i++) {
-    			src = tableau[i];
-    			Img[i] = new Image();
-    			Img[i].src = src;
     			rapport = 163/Img[i].height
     			Img[i].height = '163';
     			Img[i].width = Math.floor(Img[i].width*rapport);
